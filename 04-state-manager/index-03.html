@@ -32,11 +32,11 @@
 		class Spinner extends React.Component{
 			
 			onDecrementClick = () => {
-				let action = this.props.actionCreators.decrement();
+				let action = this.props.decrement();
 				this.props.dispatch(action);
 			}
 			onIncrementClick = () => {
-				let action = this.props.actionCreators.increment();
+				let action = this.props.increment();
 				this.props.dispatch(action);
 			}
 			render(){
@@ -53,7 +53,7 @@
 
 		function renderApp(){
 			let spinnerValue = store.getState();
-			ReactDOM.render(<Spinner value={spinnerValue} dispatch={store.dispatch} actionCreators={spinnerActionCreators} />,
+			ReactDOM.render(<Spinner value={spinnerValue} dispatch={store.dispatch} {...spinnerActionCreators} />,
 				document.getElementById('root'));
 		}
 		renderApp();
