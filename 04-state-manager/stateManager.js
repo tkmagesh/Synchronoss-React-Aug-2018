@@ -28,11 +28,22 @@ var SM = (function(){
 	function createStore(reducer){
 		_reducer = reducer;
 		_currentState = _reducer(_currentState, _init_action);
-		
+
 		return { getState, subscribe, dispatch };
 	}
 
-	return { createStore };
+	function bindActionCreators(actionCreators, dispatch){
+		let result = {};
+		for(let key in actionCreators){
+			result[key] = function(){
+				let action = actionCreators[key].apply(undefined, arguments);
+				dispatch(action);
+			}
+		}
+		return result;
+	}
+
+	return { createStore, bindActionCreators };
 
 })();
 
