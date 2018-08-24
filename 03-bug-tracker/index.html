@@ -78,10 +78,29 @@
 			getAll(){
 				return [...this._list];
 			}
+
+			removeClosed(){
+				this._list = this._list.filter(bug => !bug.isClosed);
+				this.triggerChange();
+			}
+		}
+
+		class Bug{
+			name = '';
+			isClosed = false;
+
+			constructor(bugName){
+				this.name = bugName;
+			}
+
+			toggle(){
+				this.isClosed = !this.isClosed;
+			}
 		}
 
 		class BugItem extends React.Component{
 			onBugNameClick = () => {
+				this.props.bug.toggle();
 				console.log(this.props.bug);
 			}
 			render(){
@@ -99,10 +118,7 @@
 			newBugName = '';
 
 			onBtnAddNewClick = () => {
-				let newBug = {
-					name : this.newBugName,
-					isClosed : false
-				};
+				let newBug = new Bug(this.newBugName);
 				this.props.model.addNew(newBug);
 			}
 
@@ -138,7 +154,7 @@
 							<ol>
 								{bugItems}
 							</ol>
-							<input type="button" value="Remove Closed" />
+							<input type="button" value="Remove Closed" onClick={() => model.removeClosed()} />
 						</section>
 					</section>
 				)
