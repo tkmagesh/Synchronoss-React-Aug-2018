@@ -85,7 +85,7 @@
 			}
 		}
 
-		class Bug{
+		class Bug extends EventEmitter{
 			name = '';
 			isClosed = false;
 
@@ -95,6 +95,7 @@
 
 			toggle(){
 				this.isClosed = !this.isClosed;
+				this.triggerChange();
 			}
 		}
 
