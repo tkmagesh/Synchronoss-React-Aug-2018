@@ -1,5 +1,16 @@
+import bugApi from '../services/bugApi';
+
 export function removeClosed(bugs){
-	let closedBugs = bugs.filter(bug => bug.isClosed);
-	let removeAction = { type : 'REMOVE', payload : closedBugs};
-	return removeAction;
+	return function(dispatch){
+		let closedBugs = bugs.filter(bug => bug.isClosed);
+		closedBugs.forEach(closedBug => {
+			bugApi
+				.remove(closedBug)
+				.then(() => {
+					let removeAction = { type : 'REMOVE', payload : closedBug};
+					dispatch(removeAction);			
+				})	
+		})
+		
+	}
 }

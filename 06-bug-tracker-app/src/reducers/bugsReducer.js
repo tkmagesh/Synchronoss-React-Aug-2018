@@ -8,13 +8,13 @@ function bugsReducer(currentState = [], action){
 		return newState;
 	}
 	if (action.type === 'TOGGLE'){
-		let {oldBug, newBug} = action.payload;
-		let newState = currentState.map(bug => bug === oldBug ? newBug : bug);
+		let toggledBug = action.payload;
+		let newState = currentState.map(bug => bug.id === toggledBug.id ? toggledBug : bug);
 		return newState;
 	}
 	if (action.type === 'REMOVE'){
-		let bugsToRemove = action.payload;
-		let newState = currentState.filter(bug => bugsToRemove.indexOf(bug) === -1);
+		let bugToRemove = action.payload;
+		let newState = currentState.filter(bug => bug.id !== bugToRemove.id);
 		return newState;
 	}
 	return currentState;

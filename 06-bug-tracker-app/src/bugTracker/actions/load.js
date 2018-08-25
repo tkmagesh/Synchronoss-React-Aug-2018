@@ -1,17 +1,9 @@
-import axios from 'axios';
+import bugApi from '../services/bugApi';
 
-function getBugsSync(){
-	return [
-		{name : 'Bug - 1', isClosed : false},
-		{name : 'Bug - 2', isClosed : true},
-		{name : 'Bug - 3', isClosed : false}
-	];
-}
 export function load(){
 	return function(dispatch){
-		axios
-			.get('http://localhost:3030/bugs')
-			.then(response => response.data)
+		bugApi
+			.getAll()
 			.then(bugs => {
 				let loadAction = { type : 'LOADED', payload : bugs };
 				dispatch(loadAction);		
