@@ -1,7 +1,7 @@
 import bugApi from '../services/bugApi';
 
 export function addNew(newBugName){
-	return function(dispatch){
+	/*return function(dispatch){
 		let newBugData = {
 			id : 0,
 			name : newBugName,
@@ -13,6 +13,18 @@ export function addNew(newBugName){
 				let addNewAction = { type : 'ADD_NEW', payload : newBug};
 				dispatch(addNewAction);		
 			});
+		
+	}*/
+
+	return async function(dispatch){
+		let newBugData = {
+			id : 0,
+			name : newBugName,
+			isClosed : false
+		};
+		let newBug = await bugApi.save(newBugData);
+		let addNewAction = { type : 'ADD_NEW', payload : newBug};
+		dispatch(addNewAction);
 		
 	}
 }
